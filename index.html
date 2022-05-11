@@ -6,10 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/vue@3.0.2"></script>
+    <style>
+        body{
+            background: #eee;
+            max-width: 960px;
+            margin:20px auto;
+        }
+        p,h1,ul{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style-type: none;
+            background: #fff;
+            margin: 20px auto;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        img {
+            width: 200px;
+            height: 200px;
+        }
+        li.fav{
+            background: #ff9ed2;
+            color: white;
+        }
+        .box {     
+            padding:100px 0;
+            width: 200px;
+            text-align: center;
+            background: #ddd;
+            margin: 20px;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
     <h1>Hello</h1>
     <div id="app">
+        <div v-if="showBooks">
+            <h2>Object books</h2>
+            <p>{{ filteredBooks }}</p>
+            <ul>
+                <!-- for loops &  class consists key value here fav is class and book.isFav is value that has condition condition   -->
+                <li @click="toggleFav(book)" v-for="book in filteredBooks" :class="{fav: book.isFav }">
+                    <img :src="book.img" :alt="book.title">
+                    <h3>{{book.title}}</h3>
+                    <p>{{book.author}}</p>
+                </li>
+            </ul>
+            <hr>
+            <!-- attribute binding -->
+            <a v-bind:href="url">attribute binding</a>
+            <!-- or just colon to bind -->
+            <br>
+            <a :href="url">attribute binding just add colon</a>
+            <hr>
+        </div>
         <div v-if="showBooks">
             <p>{{ title }}</p>
             <p>Author:{{ author }} Age:{{ age }}</p>
@@ -25,7 +81,12 @@
         </button>
 
         <div v-show="showBooks">Currently showing books</div>
-    </div>
+        <!-- mouse events -->
+        <div class="box" @mouseover="handleEvent($event, 5)">mouseover</div>
+        <div class="box" @mouseleave="handleEvent">mouseleave</div>
+        <div class="box" @dblclick="handleEvent">double click</div>
+        <div class="box" @mousemove="handleMouseMove">Position : X ({{ x }}), Y ({{ y }})</div>
+    </div> 
     <script src="app.js"></script>
 </body>
 </html>
